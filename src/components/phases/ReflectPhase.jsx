@@ -11,29 +11,29 @@ import questionBank from '../../data/questionBank.js';
 
 const REFLECT_QUESTIONS = [
   {
-    q: "1. How many cents are in a one-dollar ($1.00) coin?",
+    q: "1. If a cube has an edge length of 5 cm, how is its volume calculated?",
     options: [
-      "100 cents",
-      "50 cents",
-      "10 cents",
+      "Multiply edge × edge × edge = 5 × 5 × 5 = 125 cm³",
+      "Multiply edge by 3 = 5 × 3 = 15 cm³",
+      "Square the edge = 5 × 5 = 25 cm²",
     ],
     correct: 0,
   },
   {
-    q: "2. Oliver pays with a $1.00 coin for an 85¢ muffin. How is his change calculated?",
+    q: "2. If a cube's volume is 64 cm³, which mathematical operation reveals the length of one edge?",
     options: [
-      "Amount Paid − Price = $1.00 − 85¢ = 15¢",
-      "Add both numbers: $1.00 + 85¢ = $1.85",
-      "Change is always a fixed 50¢",
+      "Cube root: ∛64 = 4 cm",
+      "Square root: √64 = 8 cm",
+      "Divide by 3: 64 ÷ 3 = 21.3 cm",
     ],
     correct: 0,
   },
   {
-    q: "3. What is the golden rule when adding prices in dollars and cents?",
+    q: "3. If one square face of a cube has an area of 36 cm², how do you find its volume?",
     options: [
-      "Keep dollars with dollars and cents with cents",
-      "Ignore the decimal points completely",
-      "Always subtract the smaller number",
+      "Find edge using √36 = 6 cm, then cube it: 6³ = 216 cm³",
+      "Cube the face area directly: 36³",
+      "Divide by 6 then square it",
     ],
     correct: 0,
   },
@@ -86,9 +86,9 @@ export default function ReflectPhase({ state, dispatch }) {
       <div className="reflect-wrap">
         <div className="trophy-card glass-card anim-bounce-in">
           <div className="trophy-icon">🏆</div>
-          <h1 className="trophy-title headline">You're a Money Grand Master!</h1>
+          <h1 className="trophy-title headline">You're a Cube Craft Co. Graduate!</h1>
           <p className="trophy-sub subheadline" style={{ color: 'var(--gold)' }}>
-            Money, Coins &amp; Change Mastery Complete ✅
+            Cube Volume, Face Area, Square Roots &amp; Cube Roots Mastery Complete ✅
           </p>
 
           {/* Stats Breakdown */}
@@ -118,30 +118,31 @@ export default function ReflectPhase({ state, dispatch }) {
 
           {/* Badges */}
           {earnedBadges.length > 0 && (
-            <div className="trophy-badges">
-              <p className="label-text" style={{ color: 'var(--text-muted)', textAlign: 'center', marginBottom: '6px' }}>
-                Badges Unlocked
-              </p>
-              <div className="badge-list">
-                {earnedBadges.map(b => (
-                  <div key={b.id} className="badge-pill">
-                    <span style={{ fontSize: '1.3rem' }}>{b.icon}</span>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                      <span style={{ fontWeight: 800 }}>{b.label}</span>
-                      <span className="badge-desc label-text">{b.description}</span>
-                    </div>
+            <div className="trophy-badges-section">
+              <h3 className="subheadline" style={{ color: 'var(--gold-light)', marginBottom: '8px' }}>
+                Workshop Badges Earned ({earnedBadges.length}/{BADGES.length})
+              </h3>
+              <div className="trophy-badges-grid">
+                {earnedBadges.map((b) => (
+                  <div key={b.id} className="earned-badge-chip">
+                    <span className="earned-badge-icon">{b.emoji || b.icon}</span>
+                    <span className="earned-badge-name label-text">{b.name || b.label}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
+          {journal && (
+            <div className="trophy-journal-card">
+              <h4 className="label-text" style={{ color: 'var(--purple-light)' }}>Your Workshop Takeaway:</h4>
+              <p className="body-text" style={{ fontStyle: 'italic' }}>"{journal}"</p>
+            </div>
+          )}
+
           <div className="trophy-actions">
-            <button className="btn btn-primary trophy-cta" onClick={playAgain}>
-              🔄 Play Again
-            </button>
-            <button className="btn btn-outline" onClick={() => dispatch({ type: 'SET_PHASE', payload: 'intro' })}>
-              🏠 Home
+            <button className="btn btn-primary btn-lg" onClick={playAgain}>
+              Start New Workshop Session 🔄
             </button>
           </div>
         </div>
@@ -151,33 +152,37 @@ export default function ReflectPhase({ state, dispatch }) {
 
   return (
     <div className="reflect-wrap">
-      <div className="reflect-card glass-card anim-slide-up">
-        <div className="reflect-header">
-          <span className="reflect-badge">📓 Learning Reflection &amp; Scorecard</span>
-          <h2 className="reflect-title subheadline">Reflect on Your Money Journey</h2>
+      <div className="reflect-container anim-slide-up">
+        {/* Header */}
+        <div className="reflect-header-card glass-card">
+          <div className="reflect-header-badge">📓 Phase 05 · Reflection &amp; Scorecard</div>
+          <h1 className="reflect-title headline">Review Your Cube Mastery!</h1>
+          <p className="body-text reflect-subtitle">
+            Answer the 3 concept checks and write down your key workshop discovery before collecting your trophy!
+          </p>
+
+          <div className="reflect-mascot-row">
+            <Mascot mood="thinking" message="Think back to the workshop workbench: roots, face areas, and volumes!" size="sm" />
+          </div>
         </div>
 
-        <Mascot mood="curious" message="Let's check your key takeaways and review your scorecard!" size="sm" />
-
-        {/* Self-assessment Concept Check */}
-        <div className="reflect-quiz-container">
-          <p className="body-text" style={{ color: 'var(--gold)', fontWeight: 800 }}>
-            🧠 Money Concept Reflection Check:
-          </p>
-          {REFLECT_QUESTIONS.map((qObj, qIdx) => (
-            <div key={qIdx} className="reflect-q-item">
-              <p className="reflect-q-text">{qObj.q}</p>
-              <div className="reflect-opt-row">
-                {qObj.options.map((opt, oIdx) => {
-                  const isSelected = answers[qIdx] === oIdx;
+        {/* 3 Conceptual Review Questions */}
+        <div className="reflect-questions-card glass-card">
+          <h2 className="subheadline" style={{ color: 'var(--gold)' }}>Concept Verification Check</h2>
+          {REFLECT_QUESTIONS.map((item, qIdx) => (
+            <div key={qIdx} className="reflect-q-block">
+              <p className="reflect-q-text body-text"><strong>{item.q}</strong></p>
+              <div className="reflect-options-col">
+                {item.options.map((opt, optIdx) => {
+                  const isSelected = answers[qIdx] === optIdx;
                   return (
                     <button
-                      key={oIdx}
-                      className={`option-btn ${isSelected ? 'selected' : ''}`}
-                      onClick={() => handleSelectOption(qIdx, oIdx)}
-                      style={{ textAlign: 'left', minHeight: '44px', fontSize: '1rem', padding: '10px 14px' }}
+                      key={optIdx}
+                      className={`reflect-opt-btn ${isSelected ? 'selected' : ''}`}
+                      onClick={() => handleSelectOption(qIdx, optIdx)}
                     >
-                      <span>{opt}</span>
+                      <span className="opt-check">{isSelected ? '✓' : '○'}</span>
+                      <span className="opt-label">{opt}</span>
                     </button>
                   );
                 })}
@@ -186,50 +191,33 @@ export default function ReflectPhase({ state, dispatch }) {
           ))}
         </div>
 
-        {/* Journal Entry */}
-        <div className="reflect-journal">
-          <label className="reflect-label body-text" htmlFor="journal-input">
-            Write one key money rule or fact you mastered:
-          </label>
+        {/* Learning Journal Prompt */}
+        <div className="reflect-journal-card glass-card">
+          <h2 className="subheadline" style={{ color: 'var(--purple-light)' }}>
+            💡 Your Master Builder Takeaway
+          </h2>
+          <p className="body-text" style={{ color: 'var(--color-text-muted)' }}>
+            What is the most important difference between using √ (square root) and ∛ (cube root) when working with a cube?
+          </p>
           <textarea
-            id="journal-input"
-            className="reflect-textarea"
-            placeholder="e.g. 100 cents = $1.00, and Change = Amount Paid − Price!"
+            className="journal-textarea"
+            rows="3"
+            placeholder="e.g. Use √ on a square face area to get the edge; use ∛ on the 3D volume to get the edge..."
             value={journal}
-            onChange={e => setJournal(e.target.value)}
-            rows={2}
-            aria-label="Learning journal entry"
+            onChange={(e) => setJournal(e.target.value)}
           />
-
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '6px' }}>
-            <span style={{ fontSize: '0.8rem', color: '#a0a0b8', alignSelf: 'center' }}>Quick insert:</span>
-            {[
-              '100 cents = $1.00',
-              'Change = Amount Paid − Price',
-              'Keep cents with cents and dollars with dollars',
-            ].map(ex => (
-              <button
-                key={ex}
-                type="button"
-                onClick={() => setJournal(ex)}
-                className="quick-insert-btn"
-              >
-                ✨ {ex}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Performance Snapshot */}
-        <div className="reflect-stats">
-          <div className="reflect-stat-pill">⭐ {state?.xp || 0} XP Earned</div>
-          <div className="reflect-stat-pill">✅ {totalCorrect}/100 Correct</div>
-          <div className="reflect-stat-pill">🔥 Best Streak: {state?.maxStreak || 0}</div>
-        </div>
-
-        <div className="reflect-actions">
-          <button className="btn btn-primary btn-lg" onClick={handleSubmit}>
-            🌟 Submit Reflection &amp; View Trophy Scorecard!
+        {/* Submit Button */}
+        <div className="reflect-submit-row">
+          <button
+            className="btn btn-primary btn-lg reflect-submit-btn"
+            onClick={handleSubmit}
+            disabled={Object.keys(answers).length < REFLECT_QUESTIONS.length}
+          >
+            {Object.keys(answers).length < REFLECT_QUESTIONS.length
+              ? `Answer All 3 Checks (${Object.keys(answers).length}/3)`
+              : 'Claim Your Trophy & Graduate! 🏆'}
           </button>
         </div>
       </div>

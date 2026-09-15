@@ -1,603 +1,600 @@
 /* src/components/simulations/Stations.css */
+/* Modern, high-contrast, dark glass-morphism styling for CubeQuest stations */
 
-/* ─── Main Station Container (Single Viewport Fit) ───────────────────────── */
 .station-wrap {
   flex: 1;
   min-height: 0;
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(6px, 1vh, 10px) clamp(8px, 1.2vw, 16px);
-  gap: clamp(4px, 0.8vh, 8px);
+  justify-content: flex-start;
+  padding: clamp(6px, 1.2vh, 12px) clamp(10px, 1.5vw, 20px);
+  gap: clamp(6px, 1vh, 12px);
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-/* ─── Station Header & Badges ───────────────────────────────────────────── */
+/* ─── Station Header & Target Box ────────────────────────────────────────── */
 .station-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: nowrap;
-  gap: 8px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 10px;
   width: 100%;
-  box-sizing: border-box;
-  padding: 0 2px;
+  flex-shrink: 0;
 }
 
 .station-title {
-  color: #fcd34d;
+  color: var(--color-primary, #38bdf8);
   font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(1.1rem, 1.35vw, 1.35rem);
-  line-height: 1.2;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.station-subtitle {
+  color: var(--color-text-muted);
+  font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+  margin: 2px 0 0;
 }
 
 .station-target-box {
-  background: rgba(245, 158, 11, 0.22);
-  border: 2px solid #f59e0b;
-  border-radius: 12px;
-  padding: 3px 12px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1.5px solid #38bdf8;
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .station-target-label {
-  font-family: var(--font-body);
-  font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.station-target-num {
+  color: #fcd34d;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+
+/* ─── 2-Column Responsive Layout ────────────────────────────────────────── */
+.station-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.5vw, 18px);
+  width: 100%;
+  flex: 1;
+}
+
+@media (max-width: 820px) {
+  .station-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.station-card {
+  padding: clamp(12px, 1.5vw, 18px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.visual-card {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.visual-stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.badge-pill {
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid #38bdf8;
+  color: #bae6fd;
+  font-size: 0.82rem;
   font-weight: 800;
-  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.readout-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.interactive-canvas {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  max-height: 320px;
+}
+
+.net-svg, .builder-svg, .packing-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 280px;
+}
+
+/* ─── Controls & Manipulators ───────────────────────────────────────────── */
+.controls-card {
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+.control-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #93c5fd;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.station-target-num {
-  color: #ffd54f;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
-  line-height: 1;
-  text-shadow: 0 0 10px rgba(255, 213, 79, 0.5);
-}
-
-/* ─── 2-Column Responsive Grid ──────────────────────────────────────────── */
-.station-grid-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(8px, 1.2vw, 14px);
-  align-items: stretch;
-  flex: 1;
-  min-height: 0;
-  max-height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.station-col-left,
-.station-col-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(4px, 0.8vh, 8px);
-  width: 100%;
-  min-height: 0;
-  max-height: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* ─── Station A: Interactive Coin Supply Grid ────────────────────────────── */
-.coin-supply-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.coin-supply-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 3px 6px;
-  border-radius: 10px;
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.coin-btn {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  border-radius: 8px;
-  padding: 5px 8px;
-  min-height: 38px;
-  cursor: pointer;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  transition: var(--transition-fast, 0.18s ease);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
-  color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-  box-sizing: border-box;
-  user-select: none;
-}
-
-.coin-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  filter: brightness(1.18);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.45);
-}
-
-.coin-btn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.coin-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.coin-btn-info {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-}
-
-.coin-icon {
-  font-size: 1.25rem;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.coin-label {
-  font-family: var(--font-display);
-  font-size: clamp(0.88rem, 1vw, 1rem);
-  font-weight: 900;
-  color: #ffffff;
-  white-space: nowrap;
-}
-
-.coin-count-pill {
-  font-family: var(--font-display);
-  font-size: clamp(0.85rem, 0.95vw, 0.98rem);
-  font-weight: 900;
-  background: rgba(0, 0, 0, 0.55);
-  padding: 2px 7px;
-  border-radius: var(--radius-pill, 9999px);
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.coin-minus {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  border-radius: 8px;
-  background: rgba(239, 68, 68, 0.2);
-  border: 1.5px solid rgba(239, 68, 68, 0.55);
-  color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 900;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition-fast, 0.18s ease);
-  flex-shrink: 0;
-}
-
-.coin-minus:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.6);
-  border-color: rgba(239, 68, 68, 0.9);
-  color: #ffffff;
-}
-
-.coin-minus:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-}
-
-/* ─── Running Calculation & Money Tray Bar ───────────────────────────────── */
-.running-ratio-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: rgba(12, 10, 32, 0.9);
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.22);
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-}
-
-.running-ratio-text {
-  font-family: var(--font-display);
-  font-size: clamp(0.95rem, 1.15vw, 1.18rem);
-  font-weight: 900;
-  color: #fcd34d;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.running-ratio-text.exact {
-  color: #4ade80;
-  text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
-}
-
-.running-ratio-text.over {
-  color: #f87171;
-  text-shadow: 0 0 10px rgba(248, 113, 113, 0.6);
-}
-
-.money-tray-display {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  background: rgba(10, 8, 30, 0.75);
-  border: 2px dashed rgba(255, 255, 255, 0.28);
-  border-radius: 12px;
-  padding: 6px 10px;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.tray-coins-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  justify-content: center;
-  align-items: center;
-}
-
-.tray-coin-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  border-radius: 14px;
-  padding: 3px 10px;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 0.92rem;
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* ─── Station B: Supermarket Scanner & Cart ─────────────────────────────── */
-.market-chips-pool {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.market-item-card {
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-family: var(--font-display);
-  font-size: clamp(0.88rem, 1vw, 1.02rem);
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition-fast, 0.18s ease);
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  min-height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  user-select: none;
-  background: rgba(30, 25, 75, 0.85);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.market-item-card:hover:not(:disabled) {
-  transform: translateY(-1px);
-  border-color: #fbbf24;
-  background: rgba(251, 191, 36, 0.22);
-}
-
-.market-item-card.in-cart {
-  border-color: #4ade80;
-  background: #166534;
-  color: #ffffff;
-  font-weight: 900;
-  box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
-}
-
-.market-receipt-box {
-  background: #ffffff;
-  color: #09090b;
-  border: 2px solid #cbd5e1;
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-  width: 100%;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.market-receipt-header {
-  text-align: center;
-  font-weight: 900;
-  border-bottom: 2px dashed #94a3b8;
-  padding-bottom: 3px;
-  font-size: 0.85rem;
-  color: #18181b;
-}
-
-.market-receipt-row {
-  display: flex;
-  justify-content: space-between;
-  color: #18181b;
-  font-weight: 700;
-}
-
-.market-receipt-total {
-  border-top: 2px dashed #94a3b8;
-  padding-top: 4px;
-  font-weight: 900;
-  font-size: 1rem;
-  color: #09090b;
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
-}
-
-/* ─── Station C: Live Change-Making Till & Step Ladder ───────────────────── */
-.till-drawer-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.till-coin-btn {
-  padding: 6px 4px;
-  border-radius: 10px;
-  font-family: var(--font-display);
-  font-size: 0.98rem;
-  font-weight: 900;
-  cursor: pointer;
-  transition: var(--transition-fast, 0.18s ease);
-  min-height: 42px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-}
-
-.till-coin-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  filter: brightness(1.18);
-}
-
-.change-ladder-box {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  background: rgba(15, 12, 38, 0.9);
-  padding: 6px 12px;
-  border-radius: 12px;
-  border: 2px solid rgba(245, 158, 11, 0.55);
-  width: 100%;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
-}
-
-.change-ladder-step {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-/* ─── Station D: Spot Error Station ─────────────────────────────────────── */
-.spot-steps-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.spot-step-card {
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-family: var(--font-display);
-  font-size: 0.98rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition-fast, 0.18s ease);
-  border: 2px solid rgba(255, 255, 255, 0.22);
-  background: rgba(30, 25, 70, 0.85);
-  color: #ffffff;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  gap: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.spot-step-card:hover:not(.selected-error) {
-  border-color: #fbbf24;
-  transform: translateY(-1px);
-  background: rgba(251, 191, 36, 0.2);
-}
-
-.spot-step-card.selected-error {
-  background: rgba(34, 197, 94, 0.35);
-  border-color: #4ade80;
-  box-shadow: 0 0 12px rgba(74, 222, 128, 0.45);
-}
-
-.spot-step-card.selected-correct-step {
-  border-color: #f87171;
-  background: rgba(239, 68, 68, 0.35);
-}
-
-/* ─── Guide / Help Cards ────────────────────────────────────────────────── */
-.station-guide-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1.5px dashed rgba(255, 255, 255, 0.25);
-  border-radius: 12px;
-  padding: 8px 14px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.station-guide-text {
-  font-family: var(--font-body);
-  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
-  color: #f8fafc;
-  line-height: 1.45;
-  font-weight: 700;
-  margin: 0;
-}
-
-/* ─── Success / Completion Panel ────────────────────────────────────────── */
-.station-success {
-  background: rgba(18, 16, 52, 0.96);
-  border: 2px solid rgba(34, 197, 94, 0.7);
-  border-radius: 14px;
-  padding: 10px 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.station-success .success-icon {
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.station-success-msg {
-  font-family: var(--font-body);
-  font-size: clamp(0.92rem, 1.08vw, 1.08rem);
-  color: #ffffff;
-  line-height: 1.35;
-  font-weight: 800;
-  margin: 0;
-}
-
-.station-success-actions {
+.btn-group-row {
   display: flex;
   gap: 8px;
-  flex-wrap: nowrap;
-  justify-content: center;
   width: 100%;
-  box-sizing: border-box;
 }
 
-.station-success-actions button {
-  padding: 6px 16px;
-  font-size: clamp(0.9rem, 1vw, 1rem);
+.step-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.step-btn.active {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+/* ─── Counters & Sliders ────────────────────────────────────────────────── */
+.fill-slider-container,
+.single-dimension-controller {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-counter {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
   font-weight: 800;
-  min-height: 38px;
-  flex: 1 1 auto;
+  font-size: 0.95rem;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  min-width: 36px;
+  min-height: 36px;
 }
 
-/* ─── Station Action Buttons Row ────────────────────────────────────────── */
-.station-actions {
+.btn-counter.btn-lg {
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 1.3rem;
+}
+
+.btn-counter:hover:not(:disabled) {
+  background: #38bdf8;
+  color: #0b0f19;
+}
+
+.btn-counter:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.fill-progress-bar {
+  flex: 1;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-pill);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fill-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  transition: width 0.25s ease;
+}
+
+.fill-bar-text {
+  position: relative;
+  z-index: 2;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.dimension-display {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dimension-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.dimension-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fcd34d;
+}
+
+.dimension-sub {
+  font-size: 0.8rem;
+  color: #bae6fd;
+}
+
+/* ─── Formula Box ───────────────────────────────────────────────────────── */
+.formula-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formula-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.formula-line.active-calc {
+  color: #fcd34d;
+  font-weight: 700;
+}
+
+.math-breakdown-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  color: #cbd5e1;
+}
+
+.breakdown-row.highlight {
+  color: #fcd34d;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 4px;
+}
+
+/* ─── Order & Mission Tabs ──────────────────────────────────────────────── */
+.order-tabs-row {
   display: flex;
   gap: 6px;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: auto;
-  width: 100%;
-  box-sizing: border-box;
-  flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
-.station-actions button {
-  padding: 6px 14px;
-  min-height: 38px;
-  flex: 1 1 auto;
-  font-size: clamp(0.9rem, 1vw, 1rem);
+.order-tab-btn {
+  flex: 1;
+  min-width: 90px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.order-tab-btn.active {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fcd34d;
+}
+
+.order-tab-btn.done {
+  border-color: #34d399;
+}
+
+/* ─── Discovery Quiz ────────────────────────────────────────────────────── */
+.discovery-q {
+  font-size: 0.95rem;
+  color: #f8fafc;
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+
+.quiz-options-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.quiz-options-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quiz-opt-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
   font-weight: 800;
-  border-radius: 12px;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
 }
 
-/* ─── Responsive Media Queries ──────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .station-wrap {
-    padding: 4px 6px;
-    gap: 4px;
-  }
-  .station-grid-2col {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    overflow-y: auto;
-  }
-  .coin-supply-list {
-    grid-template-columns: 1fr 1fr;
-  }
-  .station-actions button,
-  .station-success-actions button {
-    min-height: 34px;
-    padding: 4px 10px;
-    font-size: 0.86rem;
-  }
+.quiz-opt-btn:hover:not(:disabled) {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+}
+
+.quiz-opt-btn.correct {
+  background: rgba(52, 211, 153, 0.25) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+}
+
+.quiz-opt-btn.wrong {
+  background: rgba(244, 63, 94, 0.25) !important;
+  border-color: #f43f5e !important;
+  color: #f43f5e !important;
+}
+
+/* ─── Packing Slip Styling (Delivery Note Detective) ───────────────────── */
+.packing-slip-paper {
+  background: #fdfbf7;
+  color: #1e293b;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.slip-watermark {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.04);
+  user-select: none;
+  pointer-events: none;
+  font-family: var(--font-display);
+}
+
+.slip-meta {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.slip-problem-text {
+  font-size: 0.95rem;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+
+.slip-instruction-tag {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0284c7;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.slip-lines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slip-line-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: 0.92rem;
+}
+
+.slip-line-row:hover {
+  background: #e2e8f0;
+  border-color: #38bdf8;
+}
+
+.slip-line-row.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.slip-line-row.error-flagged {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.slip-line-row.fixed-green {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+.line-num {
+  font-weight: 800;
+  color: #64748b;
+  min-width: 55px;
+}
+
+.line-label {
+  color: #334155;
+}
+
+.line-val {
+  font-weight: 800;
+  color: #0f172a;
+  margin-left: auto;
+}
+
+.line-flag-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.slip-explanation-banner {
+  margin-top: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* ─── Feedback & Success Cards ─────────────────────────────────────────── */
+.station-feedback {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.station-feedback.success {
+  background: rgba(52, 211, 153, 0.2);
+  border: 1px solid #34d399;
+  color: #34d399;
+}
+
+.station-feedback.error {
+  background: rgba(244, 63, 94, 0.2);
+  border: 1px solid #f43f5e;
+  color: #f43f5e;
+}
+
+.station-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(52, 211, 153, 0.15);
+  border: 2px solid #34d399;
+  border-radius: var(--radius-md);
+  margin-top: auto;
+}
+
+.success-icon {
+  font-size: 2rem;
+}
+
+.success-text {
+  font-size: 0.95rem;
+  color: #f8fafc;
+  line-height: 1.4;
+}
+
+.complete-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.hint-text {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
 }

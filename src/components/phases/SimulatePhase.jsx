@@ -1,18 +1,18 @@
 // src/components/phases/SimulatePhase.jsx
 import React, { useEffect, useRef } from 'react';
 import './SimulatePhase.css';
-import CoinRegisterStation from '../simulations/CoinRegisterStation.jsx';
-import PriceScannerStation from '../simulations/PriceScannerStation.jsx';
-import ChangeMakerStation from '../simulations/ChangeMakerStation.jsx';
-import ReceiptDetectiveStation from '../simulations/ReceiptDetectiveStation.jsx';
+import CubeUnfoldLab from '../simulations/CubeUnfoldLab.jsx';
+import CustomCubeBuilder from '../simulations/CustomCubeBuilder.jsx';
+import SugarCubePackingMission from '../simulations/SugarCubePackingMission.jsx';
+import DeliveryNoteDetective from '../simulations/DeliveryNoteDetective.jsx';
 import { useAudio } from '../../hooks/useAudio.js';
 import { simStationIntro } from '../../utils/narration.js';
 
 const STATIONS = [
-  { id: 0, label: 'A', name: 'Coin Register',     icon: '🪙', desc: 'Build exact target amounts' },
-  { id: 1, label: 'B', name: 'Market Scanner',    icon: '🛒', desc: 'Scan items & calculate totals' },
-  { id: 2, label: 'C', name: 'Change Maker',      icon: '🔄', desc: 'Calculate & dispense change' },
-  { id: 3, label: 'D', name: 'Receipt Detective', icon: '🔍', desc: 'Spot & fix receipt errors' },
+  { id: 0, label: 'A', name: 'Cube Unfold Lab',        icon: '🧊', desc: 'Fold 2D net & pack unit cubes' },
+  { id: 1, label: 'B', name: 'Custom Cube Builder',    icon: '🏗️', desc: 'Build cubes matching target volumes' },
+  { id: 2, label: 'C', name: 'Sugar Cube Packing',     icon: '🍬', desc: 'Calculate packing ratios' },
+  { id: 3, label: 'D', name: 'Delivery Note Detective',icon: '🔍', desc: 'Spot and fix calculation errors' },
 ];
 
 export default function SimulatePhase({ state, dispatch }) {
@@ -84,10 +84,10 @@ export default function SimulatePhase({ state, dispatch }) {
 
         {/* Station Content Area */}
         <div className="sim-station-area" role="tabpanel" key={s}>
-          {s === 0 && <CoinRegisterStation onComplete={() => handleStationComplete(0)} audioEnabled={state?.audioEnabled} />}
-          {s === 1 && <PriceScannerStation onComplete={() => handleStationComplete(1)} audioEnabled={state?.audioEnabled} />}
-          {s === 2 && <ChangeMakerStation onComplete={() => handleStationComplete(2)} audioEnabled={state?.audioEnabled} />}
-          {s === 3 && <ReceiptDetectiveStation onComplete={() => handleStationComplete(3)} audioEnabled={state?.audioEnabled} />}
+          {s === 0 && <CubeUnfoldLab onComplete={() => handleStationComplete(0)} audioEnabled={state?.audioEnabled} />}
+          {s === 1 && <CustomCubeBuilder onComplete={() => handleStationComplete(1)} audioEnabled={state?.audioEnabled} />}
+          {s === 2 && <SugarCubePackingMission onComplete={() => handleStationComplete(2)} audioEnabled={state?.audioEnabled} />}
+          {s === 3 && <DeliveryNoteDetective onComplete={() => handleStationComplete(3)} audioEnabled={state?.audioEnabled} />}
         </div>
 
         {/* Footer Navigation */}
