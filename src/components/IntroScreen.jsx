@@ -6,8 +6,8 @@ import questionBank from '../data/questionBank.js';
 
 const JOURNEY = [
   { num: '01', icon: '🔍', label: 'Wonder',   desc: 'Spark your curiosity' },
-  { num: '02', icon: '📖', label: 'Story',    desc: 'Oliver & Emma\'s market' },
-  { num: '03', icon: '🧪', label: 'Simulate', desc: '4 interactive labs' },
+  { num: '02', icon: '📖', label: 'Story',    desc: "Dev & Xin Yi's workshop" },
+  { num: '03', icon: '🧪', label: 'Simulate', desc: '4 interactive cube labs' },
   { num: '04', icon: '🎮', label: 'Practice', desc: '10 worlds & bosses' },
   { num: '05', icon: '📓', label: 'Reflect',  desc: 'Review & scorecard' },
 ];
@@ -28,26 +28,26 @@ export default function IntroScreen({ state, dispatch }) {
     <div className="intro-wrap">
       {/* Top Badge */}
       <div className="intro-top-badge">
-        ✨ Curriculum · Money, Coins, Notes &amp; Change Grade 2–5
+        📐 Singapore MOE Aligned · Primary 6 Mathematics · Volume of Cubes
       </div>
 
       {/* Main Title */}
       <h1 className="intro-title">
-        <span className="text-orange">Money</span> <span className="text-white">Quest</span>
+        <span className="text-orange">Cube</span> <span className="text-white">Quest</span>
       </h1>
-      <h2 className="intro-subtitle">MoneyQuest · Master Coins, Notes, Prices &amp; Making Change</h2>
+      <h2 className="intro-subtitle">CubeQuest · Master Volume, Face Area, Square Roots &amp; Cube Roots</h2>
 
       {/* Mascot Row */}
       <div className="intro-mascot-row">
-        <div className="intro-mascot-circle">🐷</div>
+        <div className="intro-mascot-circle">🦫</div>
         <div className="intro-speech-bubble">
-          Hi! I'm Penny. Ready to explore the market,<br />count coins, and make exact change? 🪙💵
+          Hi! I'm Bo the Beaver. Welcome to Cube Craft Co.!<br />Ready to build, fold, pack, and calculate cube volumes and roots? 🧊📦
         </div>
       </div>
 
       {/* Description */}
       <p className="intro-desc">
-        Learn how to recognise coins &amp; notes, add prices, convert between cents &amp; dollars, and calculate change like a pro shopkeeper!
+        Master finding the volume of a cube (edge × edge × edge), uncovering unknown edges using cube roots (∛) and square roots (√), liquid tank capacities, and 3D stacking!
       </p>
 
       {/* Journey Card */}
@@ -102,7 +102,7 @@ export default function IntroScreen({ state, dispatch }) {
       {/* Actions */}
       <div className="intro-ctas">
         <button className="btn btn-primary btn-lg intro-cta-main" onClick={startFresh}>
-          🚀 Begin Your Journey!
+          🚀 Enter Cube Craft Co.!
         </button>
         {hasSaved && (
           <button className="btn btn-outline" onClick={resumeSession} style={{ marginTop: '10px' }}>
@@ -114,16 +114,16 @@ export default function IntroScreen({ state, dispatch }) {
       {/* Bottom Cards */}
       <div className="intro-bottom-cards">
         <div className="bottom-card">
-          <div className="bottom-card-icon" style={{ color: '#ff6b6b' }}>🎯</div>
-          <div>100 Questions</div>
+          <div className="bottom-card-icon" style={{ color: '#38bdf8' }}>🎯</div>
+          <div>100 Cube Quests</div>
         </div>
         <div className="bottom-card">
-          <div className="bottom-card-icon" style={{ color: '#feca57' }}>🪙</div>
-          <div>Coins &amp; Notes</div>
+          <div className="bottom-card-icon" style={{ color: '#f59e0b' }}>🧊</div>
+          <div>Volume &amp; Roots (√, ∛)</div>
         </div>
         <div className="bottom-card">
-          <div className="bottom-card-icon" style={{ color: '#66bb6a' }}>✨</div>
-          <div>Badges &amp; XP</div>
+          <div className="bottom-card-icon" style={{ color: '#34d399' }}>🏆</div>
+          <div>Badges &amp; Contracts</div>
         </div>
       </div>
     </div>

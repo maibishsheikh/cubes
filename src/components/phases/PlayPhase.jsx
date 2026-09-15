@@ -278,7 +278,7 @@ export default function PlayPhase({ state, dispatch }) {
           questions={qs.slice(distIdx * 10, distIdx * 10 + 5)}
           onWin={() => {
             setShowBoss(false);
-            dispatch({ type: 'UNLOCK_BADGE', payload: 'boss_slayer' });
+            dispatch({ type: 'UNLOCK_BADGE', payload: 'boss_contract' });
           }}
           onClose={() => setShowBoss(false)}
           audioEnabled={state?.audioEnabled}

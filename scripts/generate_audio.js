@@ -1,11 +1,10 @@
 // scripts/generate_audio.js
-// Offline pre-generation script for ElevenLabs narration audio files.
-// Strictly follows audio_generation_pipeline (5).md specifications.
+// Offline pre-generation script for ElevenLabs narration audio files in CubeQuest.
+// Strictly follows audio pipeline specifications and PRD §10 natural speech rules.
 
 import fs from 'fs';
 import path from 'path';
 
-// Helper to read environment variables without external dependencies
 function loadEnv() {
   const envFiles = ['.env.local', '.env'];
   for (const file of envFiles) {
@@ -29,9 +28,8 @@ loadEnv();
 
 const apiKey = process.env.VITE_ELEVENLABS_API_KEY || process.env.ELEVENLABS_API_KEY;
 if (!apiKey) {
-  console.error("\n❌ Error: VITE_ELEVENLABS_API_KEY is not defined in .env.local or .env.");
-  console.log("Please create a .env.local file with: VITE_ELEVENLABS_API_KEY=your_key_here\n");
-  process.exit(1);
+  console.log("ℹ️ Note: VITE_ELEVENLABS_API_KEY is not defined in .env.local.");
+  console.log("To pre-generate ElevenLabs audio, create a .env.local file with: VITE_ELEVENLABS_API_KEY=your_key_here\n");
 }
 
 const VOICE_ID = 'Xb7hH8MSUJpSbSDYk0k2'; // Alice — Clear, Engaging Educator
@@ -48,66 +46,63 @@ const VOICE_SETTINGS = {
 };
 
 const phrases = [
-  // ─── INTRO ────────────────────────────────────────────────────────────────
-  { text: "Welcome to MoneyQuest! Let's investigate the big money mystery!", style: 'celebration' },
-
-  // ─── WONDER PHASE ────────────────────────────────────────────────────────
-  { text: "If Oliver has a shiny two-dollar coin, three twenty-cent coins, and one ten-cent coin… that makes two dollars and seventy cents in total.", style: 'statement' },
-  { text: "Can he buy an eighty-five cent muffin and a fifty-cent pencil, and how much change will he get back?", style: 'question' },
-  { text: "Let's investigate how counting coins and making change works!", style: 'celebration' },
+  // ─── INTRO & WONDER ───────────────────────────────────────────────────────
+  { text: "Welcome to CubeQuest at Dev and Xin Yi's Cube Craft Company!", style: 'celebration' },
+  { text: "Bo the Beaver just received a client order for custom dice, but the client only gave the total space each die takes up: its volume!", style: 'statement' },
+  { text: "How do we work backward from a cube's volume to discover the length of its edge?", style: 'question' },
+  { text: "Let's step into the workshop and uncover the power of cube roots!", style: 'celebration' },
 
   // ─── STORY PHASE: PANEL 1 ────────────────────────────────────────────────
-  { text: "Oliver had been saving up all week by helping with chores at home.", style: 'statement' },
-  { text: "On Saturday morning, his mum smiled and handed him some pocket money — a shiny two-dollar coin, three twenty-cent coins, and one ten-cent coin.", style: 'statement' },
-  { text: "How much money do I have altogether? Oliver wondered, spreading the coins out on the table.", style: 'thinking' },
-  { text: "He carefully added them up: two dollars, then sixty cents, then ten cents more.", style: 'statement' },
-  { text: "I have two dollars and seventy cents! he cheered proudly.", style: 'celebration' },
+  { text: "Dev and Xin Yi opened the workshop doors at Cube Craft Company.", style: 'statement' },
+  { text: "Bo the Beaver scurried in with a rush order: a custom batch of precision gaming dice!", style: 'statement' },
+  { text: "The client wants each die to have a volume of exactly two hundred and sixteen cubic centimetres, Dev said, scratching his chin.", style: 'thinking' },
+  { text: "Xin Yi measured a blank block. To cut the dice, we need the exact length of just one edge!", style: 'statement' },
+  { text: "Bo tapped his blueprint excitedly: Every edge of a cube is identical!", style: 'celebration' },
 
   // ─── STORY PHASE: PANEL 2 ────────────────────────────────────────────────
-  { text: "At the school market, Oliver's eyes went wide at all the stalls.", style: 'statement' },
-  { text: "He spotted a delicious-looking muffin with a price tag that read eighty-five cents.", style: 'statement' },
-  { text: "Do I have enough money to buy it? he asked nervously.", style: 'question' },
-  { text: "Emma, who was helping at the stall, grinned. It's simple! Your twenty-cent coins and ten-cent coin make seventy cents. You need eighty-five cents, so you need fifteen cents more.", style: 'statement' },
-  { text: "You have two dollars and seventy cents in total, so you definitely have enough!", style: 'celebration' },
+  { text: "Xin Yi laid out the geometric principles on the drafting table.", style: 'statement' },
+  { text: "A cube is the most special box in geometry because length, width, and height are all equal!", style: 'statement' },
+  { text: "Its volume is edge times edge times edge. If one edge is six centimetres, volume is six times six times six, which equals two hundred and sixteen cubic centimetres!", style: 'statement' },
+  { text: "And each of its six faces is an identical square with area equal to edge times edge, Xin Yi explained.", style: 'thinking' },
+  { text: "Because all edges are equal, knowing one edge reveals everything about the cube!", style: 'celebration' },
 
   // ─── STORY PHASE: PANEL 3 ────────────────────────────────────────────────
-  { text: "Oliver decided to buy the muffin. He handed over his one-dollar coin.", style: 'statement' },
-  { text: "Emma smiled and opened the till. Your muffin costs eighty-five cents, and you gave me one dollar. So I need to give you back the difference!", style: 'statement' },
-  { text: "She counted carefully and placed one ten-cent coin and one five-cent coin into Oliver's palm.", style: 'statement' },
-  { text: "That's fifteen cents change! Penny the Piggy Bank bounced excitedly. Change is the money you get back when you pay MORE than the price! One dollar minus eighty-five cents equals fifteen cents.", style: 'celebration' },
+  { text: "Dev pulled down the workshop formula guide to solve reverse problems.", style: 'statement' },
+  { text: "When you know the area of one face, use the square root to find the edge! For thirty-six square centimetres, the square root of thirty-six is six centimetres.", style: 'statement' },
+  { text: "When you know the total volume, use the cube root! For two hundred and sixteen cubic centimetres, the cube root of two hundred and sixteen is six centimetres.", style: 'statement' },
+  { text: "Square root unpacks two equal dimensions. Cube root unpacks three equal dimensions!", style: 'thinking' },
+  { text: "Both roots point straight to the same six-centimetre edge! Perfect!", style: 'celebration' },
 
   // ─── STORY PHASE: PANEL 4 ────────────────────────────────────────────────
-  { text: "By the end of the market day, Oliver had bought a muffin for eighty-five cents, a pencil for fifty cents, and a sticker pack for one dollar and twenty cents.", style: 'statement' },
-  { text: "He spent two dollars and fifty-five cents in total! Starting with two dollars and seventy cents, he had fifteen cents left over.", style: 'statement' },
-  { text: "I can add and subtract money just like regular numbers, Oliver said happily.", style: 'statement' },
-  { text: "Emma high-fived him. You're a money master now, Oliver! Penny jingled with joy.", style: 'celebration' },
+  { text: "For their grand opening project, the team built a magnificent cube-shaped display aquarium!", style: 'statement' },
+  { text: "The glass aquarium has an edge length of thirty centimetres. Its volume is thirty times thirty times thirty, which is twenty-seven thousand cubic centimetres.", style: 'statement' },
+  { text: "Xin Yi reminded the team that one litre equals one thousand cubic centimetres.", style: 'statement' },
+  { text: "Twenty-seven thousand cubic centimetres divided by one thousand gives twenty-seven litres!", style: 'statement' },
+  { text: "The tank was filled to perfection, and Cube Craft Company officially celebrated its grand opening!", style: 'celebration' },
 
   // ─── SIMULATE STATION INTROS ─────────────────────────────────────────────
-  { text: "Welcome to Station A — Coin Counter and Register Lab!", style: 'instruction' },
-  { text: "Tap the coins in the tray to build the exact target amount shown. Tap any coin in your purse to remove it. Try using the fewest coins possible!", style: 'instruction' },
-  { text: "Welcome to Station B — Supermarket Scanner and Price Matcher!", style: 'instruction' },
-  { text: "Scan items on the market conveyor, see the prices print on your receipt, and solve the shopping budget challenges!", style: 'instruction' },
-  { text: "Welcome to Station C — The Cashier Change Maker!", style: 'instruction' },
-  { text: "You are the shopkeeper! A customer buys an item and pays with a larger coin or note. Calculate the change and dispense the exact coins from the till drawer!", style: 'instruction' },
-  { text: "Welcome to Station D — Receipt Detective!", style: 'instruction' },
-  { text: "Detective Penny has found receipts with change calculation errors. Inspect the receipt, spot the mistake, and fix the amount!", style: 'instruction' },
+  { text: "Welcome to Station A — Cube Unfold Lab!", style: 'instruction' },
+  { text: "Drag or tap the slider to fold a six-square flat cardboard net into a three-dimensional cube. Then scrub the fill control to pack it with unit cubes and discover why volume equals edge times edge times edge!", style: 'instruction' },
+  { text: "Welcome to Station B — Custom Cube Builder!", style: 'instruction' },
+  { text: "Client orders have arrived with target volumes! Use the edge controls and plus-minus buttons to build cubes that hit the exact target volume!", style: 'instruction' },
+  { text: "Welcome to Station C — Sugar Cube Packing Mission!", style: 'instruction' },
+  { text: "Help the factory pack small sugar cubes into large shipping crates! Adjust both edge lengths to calculate the volumes and find how many small cubes pack tightly inside!", style: 'instruction' },
+  { text: "Welcome to Station D — Delivery Note Detective!", style: 'instruction' },
+  { text: "A packing slip has been flagged with a math error! Inspect the lines, tap the line with the mistake, and enter the corrected number!", style: 'instruction' },
 
   // ─── FEEDBACK & HINTS ────────────────────────────────────────────────────
   { text: "Spot on! That's correct! 🎉", style: 'celebration' },
-  { text: "Awesome! Three in a row! ⭐", style: 'celebration' },
-  { text: "Incredible streak! You are unstoppable! 🔥", style: 'celebration' },
-  { text: "Not quite — check the hint, count the coins carefully, and try again! 💡", style: 'thinking' },
-  { text: "Here's your first hint! Look at the biggest coins or dollars first.", style: 'encouragement' },
-  { text: "Here's your final clue! Break down the dollars and cents step by step.", style: 'encouragement' },
-
-  // ─── DISTRICT & BOSS BATTLES ─────────────────────────────────────────────
-  { text: "World Complete! Spectacular job on this money district! 🌟", style: 'celebration' },
-  { text: "The Boss Battle begins! Answer correctly to defeat the boss and claim your badge!", style: 'emphasis' },
-  { text: "Victory! You defeated the boss and claimed the World Badge! 👑", style: 'celebration' },
-
-  // ─── REFLECT PHASE ───────────────────────────────────────────────────────
-  { text: "Welcome to the Reflect Phase! Let's review the key money concepts and check your scorecard! 📓", style: 'statement' },
-  { text: "Outstanding! You have mastered money, coins, notes, and making change! You are a true Money Master! 🏆", style: 'celebration' },
+  { text: "Awesome! Three in a row! Keep up the momentum! ⭐", style: 'celebration' },
+  { text: "Steady hands streak! Five in a row! Outstanding precision! 🔧", style: 'celebration' },
+  { text: "Master builder streak! Ten in a row! You are unstoppable! 🏗️", style: 'celebration' },
+  { text: "Not quite — check the hint, remember whether you need square root or cube root, and try again! 💡", style: 'thinking' },
+  { text: "Here is your first clue! Recall the key formula: Volume equals edge times edge times edge, and Face Area equals edge times edge.", style: 'encouragement' },
+  { text: "Here is your second clue! Use the cube root to find the edge from volume, or the square root to find the edge from face area.", style: 'encouragement' },
+  { text: "World Complete! Spectacular craftsmanship on this workshop district! 🌟", style: 'celebration' },
+  { text: "The Boss Challenge begins! Answer all five cube questions correctly with your three lives to earn the World Badge! 🏆", style: 'instruction' },
+  { text: "Victory! You defeated the boss and secured the contract! Wear your badge with pride! 👑", style: 'celebration' },
+  { text: "Welcome to the Reflect Phase! Let's review the core rules of cube volume and roots, and inspect your mastery scorecard! 📓", style: 'statement' },
+  { text: "Outstanding! You have mastered cube volume, face area, square roots, and cube roots! You are a certified Cube Craft Co. Graduate! 🏆", style: 'celebration' },
 ];
 
 const outputDir = './public/assets/audio';
@@ -116,11 +111,15 @@ if (!fs.existsSync(outputDir)) {
 }
 
 function cleanString(str) {
-  return str.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 45).replace(/_+/g, '_').replace(/^_|_$/g, '');
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '_')
+    .replace(/_+/g, '_')
+    .substring(0, 50);
 }
 
 async function main() {
-  console.log(`\n🎙️ Starting ElevenLabs Audio Generation Pipeline`);
+  console.log(`\n🎙️ Starting ElevenLabs Audio Generation Pipeline for CubeQuest`);
   console.log(`Voice ID: ${VOICE_ID} | Model: ${VOICE_MODEL}`);
   console.log(`Total phrases to process: ${phrases.length}\n`);
 
@@ -140,8 +139,12 @@ async function main() {
       continue;
     }
 
-    console.log(`[${i + 1}/${phrases.length}] 🔊 Generating: "${text.substring(0, 40)}..." -> ${fileName}`);
+    if (!apiKey) {
+      // Offline mode without API key: map generated path
+      continue;
+    }
 
+    console.log(`[${i + 1}/${phrases.length}] 🔊 Generating: "${text.substring(0, 40)}..." -> ${fileName}`);
     const settings = VOICE_SETTINGS[style] || VOICE_SETTINGS.statement;
 
     try {
@@ -173,10 +176,9 @@ async function main() {
   }
 
   // Write mapping to src/utils/audioMap.js
-  const mapContent = `// Auto-generated by generate_audio.js\n// Static asset mapping for offline generated narration phrases in MoneyQuest\n\nexport const audioMap = ${JSON.stringify(mapping, null, 2)};\n\nexport default audioMap;\n`;
+  const mapContent = `// Auto-generated by generate_audio.js\n// Static asset mapping for offline generated narration phrases in CubeQuest\n\nexport const audioMap = ${JSON.stringify(mapping, null, 2)};\n\nexport default audioMap;\n`;
   fs.writeFileSync('./src/utils/audioMap.js', mapContent);
   console.log("\n✨ Audio mapping updated in src/utils/audioMap.js!");
-  console.log("🎉 Audio generation completed successfully!\n");
 }
 
 main().catch(console.error);
