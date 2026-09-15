@@ -284,28 +284,34 @@ svg {
 .options-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .option-btn {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
   font-weight: 700;
   text-align: center;
-  padding: 16px 12px;
-  border-radius: var(--radius-md, 14px);
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
+  padding: 10px 12px;
+  border-radius: var(--radius-md, 12px);
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 54px;
+  min-height: 44px;
   line-height: 1.25;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .option-btn:hover:not(.disabled):not(.correct):not(.wrong):not(.selected) {

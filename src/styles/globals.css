@@ -216,23 +216,29 @@ body {
 .options-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
+  box-sizing: border-box;
 }
 .option-btn {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
   font-weight: 700;
   text-align: center;
-  padding: 13px 10px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
-  border: 2px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04);
+  border: 2px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
   color: var(--color-text);
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 48px;
-  line-height: 1.2;
+  min-height: 44px;
+  line-height: 1.25;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .option-btn:hover:not(.disabled):not(.correct):not(.wrong):not(.selected) {
   border-color: rgba(255,193,7,0.55);
