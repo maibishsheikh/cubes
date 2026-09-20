@@ -84,6 +84,18 @@ function reducer(state, action) {
         streak: 0,
       };
 
+    case 'SET_DISTRICT': {
+      const dist = Math.max(0, Math.min(action.payload, 9));
+      return {
+        ...state,
+        currentDistrict: dist,
+        currentQuestion: dist * 10,
+        attemptCount: 0,
+        hintsUsed: 0,
+        showFeedback: null,
+      };
+    }
+
     case 'ANSWER_CORRECT': {
       const newStreak = state.streak + 1;
       const maxStreak = Math.max(state.maxStreak, newStreak);
