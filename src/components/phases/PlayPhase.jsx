@@ -130,6 +130,7 @@ export default function PlayPhase({ state, dispatch }) {
 
   function startDistrict(idx) {
     setShowMap(false);
+    dispatch({ type: 'SET_DISTRICT', payload: idx });
     setTimeout(() => narrate(playQuestionNarration(qs[idx * 10]?.questionText || '')), 400);
   }
 
@@ -159,47 +160,15 @@ export default function PlayPhase({ state, dispatch }) {
     const isAllDone = qIdx >= 100;
     return (
       <div className="play-map-wrap">
-        <div className="play-map-card glass-card">
-          <h2 className="play-map-title subheadline">🗺️ Money Worlds Kingdom</h2>
-          <p className="body-text" style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
-            {isAllDone ? (
-              <strong style={{ color: 'var(--gold)' }}>All 10 Money Worlds Complete!</strong>
-            ) : (
-              <>World {distIdx + 1}: <strong style={{ color: 'var(--gold)' }}>{district.name}</strong></>
-            )}
-          </p>
-
-          <KingdomMap
-            districtScores={state?.districtScores || []}
-            districtCorrect={state?.districtCorrect || []}
-            currentDistrict={isAllDone ? 10 : distIdx}
-            onSelectDistrict={(d) => {
-              if (d <= distIdx) {
-                setShowMap(false);
-              }
-            }}
-          />
-
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '10px' }}>
-            {!isAllDone ? (
-              <>
-                <button className="btn btn-primary" onClick={() => startDistrict(distIdx)}>
-                  🚀 Enter {district.name}!
-                </button>
-                <button className="btn btn-outline" onClick={() => setShowBoss(true)} style={{ borderColor: '#feca57', color: '#feca57' }}>
-                  👑 Challenge Boss ({district.boss.name})
-                </button>
-                <button className="btn btn-outline" onClick={() => dispatch({ type: 'SET_PHASE', payload: 'reflect' })}>
-                  📓 Jump to Reflect
-                </button>
-              </>
-            ) : (
-              <button className="btn btn-primary" onClick={() => setShowMap(false)}>
-                📊 View Results
-              </button>
-            )}
-          </div>
-        </div>
+        <KingdomMap
+          districtScores={state?.districtScores || []}
+          districtCorrect={state?.districtCorrect || []}
+          currentDistrict={isAllDone ? 10 : distIdx}
+          onSelectDistrict={(d) => {
+            startDistrict(d);
+          }}
+          onGoReflect={() => dispatch({ type: 'SET_PHASE', payload: 'reflect' })}
+        />
 
         {/* Boss Battle Modal from map */}
         {showBoss && (
